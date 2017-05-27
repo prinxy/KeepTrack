@@ -1,16 +1,18 @@
+# Import Modules
 import sys
 
 
 class Thing:
 
-    room = []
+    room = []  # create empty list named room
 
+    # initilize object creation values
     def __init__(self, thing_name):
         self.thing_name = thing_name
 
     def add_thing(self, thing_name):
         thing_place = str.lower(input("Place: "))
-        Creation.place(thing_place)
+        Creation.item_with_location(thing_name, thing_place)
 
         user_input = str.lower(input("Add more? y/n "))
 
@@ -77,13 +79,29 @@ class Creation():
             print(place_index)
             with open("places.txt", "a") as user_places:
                 user_places.write("{}-{}\n".format(thing_place, place_index))
-                main()
+            return
 
         else:
             pass
 
-    def place_with_location():
-        pass
+    def item_with_location(thing_name, thing_place):
+        if thing_place in Thing.room:
+            place_index = Thing.room.index(thing_place)
+            print(place_index)
+            with open("things.txt", "a") as user_things:
+                user_things.write("{}-{}\n".format(thing_name, place_index))
+
+        elif thing_place not in Thing.room:
+            Thing.room.append(thing_place)
+            place_index = Thing.room.index(thing_place)
+            with open("places.txt", 'a') as user_places:
+                user_places.write("{}-{}\n".format(thing_place, place_index))
+
+            with open("things.txt", 'a') as user_things:
+                user_things.write("{}-{}\n".format(thing_name, place_index))
+
+        else:
+            pass
 
 
 def main():
@@ -92,24 +110,29 @@ def main():
     if Thing.room == []:
         with open("places.txt", "r") as load_places:
             places = load_places.readlines()
-            # place = [place.strip() for place in places]
             for place in places:
-                # print(place[:-3])
-                # print(place)
                 Thing.room.append(place[:-3])
             print(Thing.room)
+
+            # we now have a room set having places as values
 
         # with open("things.txt", "r") as load_things:
         #     things = load_things.readlines()
         #     # thing = [thing.strip() for thing in things]
+        #     # item_list = []
         #     for thing in things:
         #         # list_things = things[2:]
-        #         print(thing[:-3])
-        #         # if thing[-1] == 0:
-        #         Thing.room[0].append(thing)
-        #         print(Thing.room[0])
-        #     # elif thing[0] == 1:
-        #     # pass
+        #         # temp = thing[:-3]
+        #         if thing[:-1] == '0':
+        #             Thing.room[0] = thing
+        #             print(thing)
+        #         # item_list.append(temp)
+        #     print(Thing.room)
+
+            # print(Thing.room[0])
+            # print(Thing.room[1])
+            # elif thing[0] == 1:
+            # pass
 
     # print("""
     # (A)dd (I)tem, (A)dd (L)ocation, (R)emove (I)tem, (R)emove (L)ocation
@@ -140,6 +163,7 @@ def main():
     elif user_input == '4':
         thing_place = str.lower(input("Place: "))
         Creation.place(thing_place)
+        main()
 
     elif user_input == '5':
         Thing.remove_place()

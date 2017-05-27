@@ -1,4 +1,2 @@
 table-0
 drawer-1
-chair-2
-something-3

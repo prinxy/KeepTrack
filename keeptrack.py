@@ -40,20 +40,37 @@ class Thing:
         #     Item.remove_item()
 
     def remove_place():
-        user_input = str.lower(input("Place: "))
-        if user_input in Thing.room:
-            Thing.room.remove(user_input)
-            print(Thing.room)
-            main()
-
-        elif user_input not in Thing.room:
-            print("place does not exist")
-            main()
+        pass
+        # user_input = str.lower(input("Place: "))
+        # if user_input in Thing.room:
+        #     # place_index = Thing.room.index(user_input)
+        #     Thing.room.remove(user_input)
+        #     # remove_thing()
+        #     with open("things.txt", "r") as load_things:
+        #         things = load_things.readlines()
+        #         thing = [thing.strip() for thing in things]
+        #         # if place_index in thing:
+        #     print(Thing.room)
+        #     main()
+        #
+        # elif user_input not in Thing.room:
+        #     print("place does not exist")
+        #     main()
 
     @staticmethod
     def view_things():
-        pass
-        # main()
+        with open("things.txt", "r") as load_things:
+            things = load_things.readlines()
+            thing = [thing.strip() for thing in things]
+            print(thing)
+            for each_thing in thing:
+                for i in range(len(Thing.room)):
+
+                    if each_thing[-1] == '{}'.format(i):
+                        print("{} belongs"
+                              + "to {}".format(each_thing, Thing.room[i]))
+
+        main()
 
     @staticmethod
     def view_places():
@@ -92,11 +109,8 @@ class Creation():
                 user_things.write("{}-{}\n".format(thing_name, place_index))
 
         elif thing_place not in Thing.room:
-            Thing.room.append(thing_place)
+            Creation.place(thing_place)
             place_index = Thing.room.index(thing_place)
-            with open("places.txt", 'a') as user_places:
-                user_places.write("{}-{}\n".format(thing_place, place_index))
-
             with open("things.txt", 'a') as user_things:
                 user_things.write("{}-{}\n".format(thing_name, place_index))
 
@@ -114,30 +128,21 @@ def main():
                 Thing.room.append(place[:-3])
             print(Thing.room)
 
-            # we now have a room set having places as values
-
+            # we now have a list named room having places as values
+        #
         # with open("things.txt", "r") as load_things:
         #     things = load_things.readlines()
-        #     # thing = [thing.strip() for thing in things]
-        #     # item_list = []
-        #     for thing in things:
-        #         # list_things = things[2:]
-        #         # temp = thing[:-3]
-        #         if thing[:-1] == '0':
-        #             Thing.room[0] = thing
-        #             print(thing)
-        #         # item_list.append(temp)
-        #     print(Thing.room)
-
-            # print(Thing.room[0])
-            # print(Thing.room[1])
-            # elif thing[0] == 1:
-            # pass
-
-    # print("""
-    # (A)dd (I)tem, (A)dd (L)ocation, (R)emove (I)tem, (R)emove (L)ocation
-    # (V)iew (I)tems or (V)iew (L)ocations or (Q)uit
-    # """)
+        #     thing = [thing.strip() for thing in things]
+        #     # the_things = things.split('\n')
+        # print(thing)
+        # # print(thing[1])
+        # # total_places = len(Thing.room)
+        # for each_thing in thing:
+        #     for i in range(len(Thing.room)):
+        #
+        #         if each_thing[-1] == '{}'.format(i):
+        #             print("{} belongs"
+        #                   + "to {}".format(each_thing, Thing.room[i]))
 
     print("""
 1. Add Things
@@ -158,7 +163,7 @@ def main():
         Thing.remove_thing()
 
     elif user_input == '3':
-        Thing.view_thing()
+        Thing.view_things()
 
     elif user_input == '4':
         thing_place = str.lower(input("Place: "))

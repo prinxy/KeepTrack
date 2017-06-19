@@ -53,7 +53,7 @@ class Thing:
 
     @staticmethod
     def remove_place():
-        """DOCSTRING."""
+        """DOCSTRING"""
         user_input = str.lower(input("Place: "))
         if user_input in Thing.room:
             place_index = Thing.room.index(user_input)
@@ -115,10 +115,6 @@ class Creation():
                 Thing.things[place_index].append(thing_name)
             print(Thing.room)
             print(Thing.things)
-            # place_index = Thing.room.index(thing_place)
-            # print(place_index)
-            # with open("things.txt", "a") as user_things:
-            #     user_things.write("{}-{}\n".format(thing_name, place_index))
 
         elif thing_place not in Thing.room:
             # Append the place to list room
@@ -185,9 +181,6 @@ class FileOperations:
 
 def main():
     """DOCSTRING."""
-    if Thing.room == [] and Thing.things == []:
-        FileOperations.fetch_places()
-        FileOperations.fetch_things()
 
     print("""
 1. Add Things
@@ -237,5 +230,9 @@ def main():
         print("Wrong selection")
         main()
 
+
+if Thing.room == [] and Thing.things == []:
+    FileOperations.fetch_places()
+    FileOperations.fetch_things()
 
 main()

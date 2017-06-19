@@ -1,12 +1,11 @@
-"""DOCSTRING"""
+"""DOCSTRING."""
 # Import Modules
-import sys
-# import subprocess
 import pickle
+import sys
 
 
 class Thing:
-    """DOCSTRING"""
+    """DOCSTRING."""
 
     room = []  # create empty list named room
     things = []
@@ -16,7 +15,7 @@ class Thing:
         self.thing_name = thing_name
 
     def add_thing(self, thing_name):
-        """DOCSTRING"""
+        """DOCSTRING."""
         thing_place = str.lower(input("Place: "))
         Creation.item_with_location(thing_name, thing_place)
 
@@ -34,7 +33,7 @@ class Thing:
 
     @staticmethod
     def remove_thing():
-        """DOCSTRING"""
+        """DOCSTRING."""
         to_remove = str.lower(input("To remove: "))
         # create a loop that will go through each item
         # or if place is known, get place_index and use it to
@@ -54,7 +53,7 @@ class Thing:
 
     @staticmethod
     def remove_place():
-        """DOCSTRING"""
+        """DOCSTRING."""
         user_input = str.lower(input("Place: "))
         if user_input in Thing.room:
             place_index = Thing.room.index(user_input)
@@ -64,33 +63,32 @@ class Thing:
 
     @staticmethod
     def view_things():
-        """DOCSTRING."""
-        #View all
+        """DOCSTRING.."""
+        # View all
         print(Thing.things)
         main()
         # View all in a place
 
-
     @staticmethod
     def view_places():
-        """DOCSTRING"""
+        """DOCSTRING.."""
         print(Thing.room)
         main()
 
 
 class Creation():
-    """DOCSTRING"""
+    """DOCSTRING."""
 
     @staticmethod
     def thing():
-        """DOCSTRING"""
+        """DOCSTRING."""
         thing_name = str.lower(input("Thing name: "))
         thing = Thing(thing_name)
         thing.add_thing(thing_name)
 
     @staticmethod
     def place(thing_place):
-        """DOCSTRING"""
+        """DOCSTRING."""
         # item_place = str.lower(input("New place: "))
         if thing_place in Thing.room:
             print("In room")
@@ -99,9 +97,6 @@ class Creation():
             Thing.room.append(thing_place)
             place_index = Thing.room.index(thing_place)
             print(place_index)
-            with open("places.txt", "a") as user_places:
-                user_places.write("{}-{}\n".format(thing_place, place_index))
-            return
 
         else:
             pass
@@ -109,7 +104,7 @@ class Creation():
     @staticmethod
     def item_with_location(thing_name, thing_place):
         """
-        DOCSTRING
+        DOCSTRING.
         """
         if thing_place in Thing.room:
             place_index = Thing.room.index(thing_place)
@@ -145,38 +140,51 @@ class Creation():
 
 
 class FileOperations:
-    """DOCSTRING"""
+    """DOCSTRING.."""
+
     @staticmethod
     def fetch_places():
-        """Splits the places in places file and assigns them to
-        their relevant index in the class variable called Thing.room"""
+        """DOCSTRING."""
 
         with open("places.txt", "rb") as load_places:
-            Thing.room = pickle.load(load_places)
-            print(Thing.room)
+            try:
+                Thing.room = pickle.load(load_places)
+                print(Thing.room)
+            except EOFError:
+                pass
 
     @staticmethod
     def fetch_things():
-        """Splits the things in things.txt and assigns them to
-        their relevant index in the class varibale Thing.things"""
+        """DOCSTRING."""
         with open("things.txt", "rb") as load_things:
             Thing.things = pickle.load(load_things)
             print(Thing.things)
 
     @staticmethod
     def save_places():
-        """DOCSTRING"""
+        """DOCSTRING."""
         with open("places.txt", 'wb') as place_in_file:
             pickle.dump(Thing.room, place_in_file)
 
     @staticmethod
     def save_things():
-        """DOCSTRING"""
+        """DOCSTRING."""
         with open("things.txt", 'wb') as thing_to_file:
             pickle.dump(Thing.things, thing_to_file)
 
+    @staticmethod
+    def reset_files():
+        """DOCSTRING."""
+        pass
+        # with open("places.txt", 'w'):
+        #     pass
+        # with open("things.txt", 'w'):
+        #     pass
+        # main()
+
+
 def main():
-    """DOCSTRING"""
+    """DOCSTRING."""
     if Thing.room == [] and Thing.things == []:
         FileOperations.fetch_places()
         FileOperations.fetch_things()
@@ -215,7 +223,10 @@ def main():
         Thing.view_places()
 
     elif user_input == '7':
-        pass
+        Thing.room = []
+        Thing.things = []
+        FileOperations.reset_files()
+        main()
 
     elif user_input == '8':
         FileOperations.save_places()

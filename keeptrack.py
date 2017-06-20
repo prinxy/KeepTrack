@@ -2,6 +2,7 @@
 # Import Modules
 import pickle
 import sys
+import os
 
 
 class Thing:
@@ -71,8 +72,10 @@ class Thing:
 
     @staticmethod
     def view_places():
-        """DOCSTRING.."""
-        print(Thing.room)
+        """DOCSTRING."""
+        for every_place in Thing.room:
+            print(every_place)
+        # print(Thing.room)
         main()
 
 
@@ -137,6 +140,9 @@ class Creation():
 
 class FileOperations:
     """DOCSTRING.."""
+
+    places_path = "places.txt"
+    things_path = "things.txt"
 
     @staticmethod
     def fetch_places():
@@ -231,8 +237,10 @@ def main():
         main()
 
 
-if Thing.room == [] and Thing.things == []:
-    FileOperations.fetch_places()
-    FileOperations.fetch_things()
+if os.path.getsize(FileOperations.places_path
+                   and FileOperations.things_path) > 0:
+    if Thing.room == [] and Thing.things == []:
+        FileOperations.fetch_places()
+        FileOperations.fetch_things()
 
 main()
